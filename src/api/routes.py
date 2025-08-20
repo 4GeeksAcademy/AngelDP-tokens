@@ -23,6 +23,9 @@ def signup():
     for field in required_fields:
         if field not in data:
             return jsonify({"Error": f"The field '{field}' is required"}), 400
+        
+    if data['password'].strip() == '':
+        return jsonify({"Error": "Password cannot be empty"}), 400
 
     existing_user = User.query.filter_by(username=data['username']).first()
     if existing_user:
